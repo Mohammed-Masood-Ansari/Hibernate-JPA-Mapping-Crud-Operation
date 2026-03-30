@@ -1,5 +1,6 @@
 package com.tcs.hibernate_uni_directional_mapping_crud_operation.one_to_one.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -21,6 +22,6 @@ public class Person {
 	@Column(unique = true)
 	private String email;
 	
-	@OneToOne
+	@OneToOne(cascade =CascadeType.ALL)
 	private Pan pan;
 }

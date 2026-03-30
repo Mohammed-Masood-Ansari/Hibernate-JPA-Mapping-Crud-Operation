@@ -24,6 +24,8 @@ public class InsertPersonPanController {
 		person.setId(913);
 		person.setName("Rohan");
 		person.setEmail("rohan@gmail.com");
+		
+		
 		person.setPan(pan);
 		
 		PersonPanDao dao=new PersonPanDao();
