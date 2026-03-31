@@ -67,7 +67,7 @@ public class PersonPanDao {
 	
 	public boolean deletePersonById(int id) {
 		
-		Person person=getPersonPanByPersonIdDao(id);
+		Person person=em.find(Person.class,id);
 		
 		if(person!=null) {
 			et.begin();
