@@ -69,4 +69,50 @@ public class CountryStateDao {
 		
 		return false;
 	}
+	
+	public Country getCountryByCountryNameDao(String countryName) {
+		
+		String displayCountryStateQuery = "Select c From Country c where c.name=?1";
+		
+		Query query=em.createQuery(displayCountryStateQuery,Country.class);
+		
+		query.setParameter(1, countryName);
+		
+		try {
+			Country country=(Country) query.getSingleResult();
+			return country;
+		} catch (Exception e) {
+		   e.printStackTrace();
+		   return null;
+		}
+	}
+	
+	public Country updateStateNoOfDistrictByCountryIdDao(int countryId,int stateId,int noOfDistrict) {
+		
+		Country  country=em.find(Country.class, countryId);
+		
+		if(country!=null) {
+			
+			List<State> states = country.getStates();
+			
+			for (State state : states) {
+			
+				if(state.getId()==stateId) {
+					
+					state.setNoOfDistrict(noOfDistrict);
+					
+					et.begin();
+					em.merge(state);
+					et.commit();
+					System.out.println("aapka data update ho chuka hai db me check krlo");
+					return country;
+				}
+			}
+			System.out.println("state id check krlo");
+			return null;
+		}
+		System.out.println("country id check kro!!!!");
+		return null;
+	}
+	
 }

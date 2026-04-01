@@ -5,6 +5,8 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
 
@@ -22,6 +24,10 @@ public class Country {
 	private String name;
 	private String capital;
 	
-	@OneToMany(cascade = CascadeType.PERSIST )
+	@OneToMany(cascade = {CascadeType.PERSIST,CascadeType.REMOVE,CascadeType.MERGE} )
+	@JoinTable(name="country-states",
+	joinColumns = @JoinColumn(name="cid"),
+	inverseJoinColumns = @JoinColumn(name="sid")
+			)
 	private List<State> states;
 }
