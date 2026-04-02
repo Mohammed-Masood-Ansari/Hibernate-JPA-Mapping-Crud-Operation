@@ -51,5 +51,47 @@ public class CollegeUniversityDao {
 	
 	public College saveCollegeAndAssociateWithExistingUniversityDao(College college, int universityId) {
 		
+	
+		
+		if(college==null||universityId<0) {
+			return null;
+		}
+		
+		try {
+			
+			em=emf.createEntityManager();
+			et=em.getTransaction();
+			
+			University university=em.find(University.class, universityId);
+			
+			if(university!=null) {
+				
+				college.setUniversity(university);
+				
+				et.begin();
+				
+				em.persist(college);
+				
+				et.commit();
+				
+				return college;
+			}
+			return null;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			if(et!=null&&et.isActive()) {
+				et.rollback();
+			}
+			
+			return null;
+		}finally {
+			
+			if(em!=null&&em.isOpen()) {
+				em.close();
+			}
+		}
+		
 	}
 }
